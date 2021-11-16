@@ -231,8 +231,10 @@ public class Labyrinth {
         return new int[] {loc[0] + direction[0], loc[1] + direction[1]};
     }
     
-    //Print the grid.
-    private void printGrid() {
+    /**
+    * Prints the Labyrinth to StdOut. Mostly usefule for testing.
+    */
+    public void printGrid() {
         System.out.println();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
