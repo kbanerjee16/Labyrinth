@@ -3,7 +3,7 @@
 Noah (could be anyone named "Noah," really...) is trapped in the Labyrinth with the Minotaur!
 Your task is to help him escape before he gets eaten (Minotaur's are fond of eating freshmen).
 
-[javadoc here](https://friendsbaltcs.github.io/docs/ACS/Labyrinth/)
+[Javadoc](https://friendsbaltcs.github.io/docs/ACS/Labyrinth/)
 
 ## Set Up
 
@@ -17,6 +17,7 @@ made out of stone. To help you, the Labyrinth class has some helpful methods
 with `rows` rows of squares and `cols` columns of squares,
 2. A method `isStone(row, col)` to tell if the given row and column are stone, and
 3. A method `isValid(row, col)` to tell if the given row and column are on within the grid.
+4. A method `solves(int[] solution)` which checks your solution to see if it will rescue Noah!
 
 ## Solution
 
@@ -25,3 +26,5 @@ be represented as an `int[]` array of integers from 0 through 3. 0 Represents a 
 grid square up, 1 a step down, 2 left, and 3 right. You should write a class which contains
 a `solve(Labyrinth l)` method which returns this `int[]` array of instructions to navigate
 the given Labyrinth from the top left to the bottom right corners.
+
+A complete description of the Labyrinth class can be found in the Javadoc above.
