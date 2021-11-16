@@ -3,6 +3,8 @@
 Noah (could be anyone named "Noah," really...) is trapped in the Labyrinth with the Minotaur!
 Your task is to help him escape before he gets eaten (Minotaur's are fond of eating freshmen).
 
+[javadoc here](https://friendsbaltcs.github.io/docs/ACS/Labyrinth/)
+
 ## Set Up
 
 You will be given a class called `Labyrinth.` A Labyrinth is a rectangular grid of squares
