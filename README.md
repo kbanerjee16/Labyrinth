@@ -20,6 +20,6 @@ with `rows` rows of squares and `cols` columns of squares,
 
 You should use backtracking to find a path through the Labyrinth. Your final solution will
 be represented as an `int[]` array of integers from 0 through 3. 0 Represents a step one
-grid square up, 1 a step down, 2 left, and 3 right. You should right a class which contains
+grid square up, 1 a step down, 2 left, and 3 right. You should write a class which contains
 a `solve(Labyrinth l)` method which returns this `int[]` array of instructions to navigate
 the given Labyrinth from the top left to the bottom right corners.
