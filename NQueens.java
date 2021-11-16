@@ -18,7 +18,7 @@
 *
 * @author Joel Hammer
 */
-ublic class NQueens {
+public class NQueens {
     private final int n;
     private boolean[][] grid;
     private final int[] UP = {-1,0};
