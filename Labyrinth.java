@@ -1,12 +1,77 @@
+/*
+* Labyrinth.java is part of the Backtracking project in
+* the recursion unit of Advanced CS at Friends School of Baltimore.
+*
+*
+* Testing--
+* Compile: javac Labyrinth.java
+* Run: java Labyrinth [rows] [columns]
+*
+*
+* (c) 2021 Joel Hammer
+* Friends School of Baltimore
+*
+*
+*/
+
+/**
+* Generates a random "grid-maze" of individual squares arranged into a
+* rectangular grid such that a path from the top-left to the bottom-right
+* corner always exists. Squares are made out of either stone or lava. Stone
+* squares can be traversed while lava squares cannot. A square is "touching"
+* another square if it is directly above or below that square or directly to
+* its right or left (diagonally "touching" squares are not said to be really
+* <i> touching </i> in this context). The Labyrinth is generated so that one
+* can move along touching squares from the start square (top-left) to the end
+* square (bottom-right).
+* <br>
+* <br>
+* Coordinates in the Labyrinth are given in (row, column) form and not (x,y).
+* That is, in general, the parameters of the methods below expect a row number
+* followed by a column number. Both the rows and columns are numbered from the
+* top-left corner and begin with 0, so that the top-left corner is (row = 0, 
+* col = 0) and, say, three squares down and four to the right would be (row = 3,
+* col = 4).
+* <br>
+* <br>
+* A solution to the Labyrinth is a series of steps or "moves." These moves
+* begin from the start (top-left) square and each move can either be to the
+* square immediately above, below, to the left, or to the right of the current
+* square.
+*/
 public class Labyrinth {
+    /**
+    * The number of rows in the Labyrinth grid.
+    */
     public final int rows;
+    
+    /**
+    * The number of columns in the Labyrinth grid.
+    */
     public final int cols;
     private UF tracker;
     private int destination;
+    
+    /**
+    * Utility constant representing moving up a column, staying in the same row.
+    */
     public static final int[] UP = {-1,0};
+    
+    /**
+    * Utility constant representing moving down a column, staying in the same row.
+    */
     public static final int[] DOWN = {1,0};
+    
+    /**
+    * Utility constant representing moving left in a row, staying in the same column.
+    */
     public static final int[] LEFT = {0,-1};
+    
+    /**
+    * Utility constant representing moving right in a row, staying in the same column.
+    */
     public static final int[]  RIGHT = {0,1};
+    
     private boolean[][] grid;
     
     /**
