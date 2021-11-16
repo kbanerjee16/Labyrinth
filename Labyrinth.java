@@ -51,7 +51,7 @@
 * <li> "Down" = 1 </li>
 * <li> "Left" = 2 </li>
 * <li> "Right" = 3 </li>
-* <ul>
+* </ul>
 * <br>
 * <br>
 * In the second case, the solution is actually represented using an {@code int[][]}
@@ -97,9 +97,8 @@ public class Labyrinth {
     
     /**
     * Constructs a random labyrinth with specified width and height.
-    * @param x the width (in grid squares) of the maze.
-    * @param y the height (in grid squares) of the maze.
-    * @return a new Labyrinth object of the specified dimensions.
+    * @param rows the desired number of rows in the Labyrinth
+    * @param cols the desired number of columns in the Labyrinth
     */
     public Labyrinth(int rows, int cols) {
         this.rows = rows;
@@ -248,7 +247,11 @@ public class Labyrinth {
         }
     }
     
-    //Some testing code.
+    /**
+    * Tests the Labyrinth class by generating a random Labyrinth with
+    * dimensions determined from command line
+    * @param args command line arguments. First the number of rows, then columns.
+    */
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Usage is java Labyrinth [rows] [columns]");
