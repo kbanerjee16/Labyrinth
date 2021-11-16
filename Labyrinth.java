@@ -44,9 +44,35 @@ public class Labyrinth {
         return row * cols + col;
     }
     
-    //Check if a given row and col are a valid coordinate in the grid.
+    private int toAbs(int[] loc) throws IllegalArgumentException {
+        validateLoc(loc);
+        return toAbs(loc[0], loc[1]);
+    }
+    
+    //Ensure locations given as array of length 2 is formatted correctly.
+    private void validateLoc(int[] loc) throws IllegalArgumentException {
+        if (loc.length != 2) {
+            throw new IllegalArgumentException("Location parameters must have exactly two arguments");
+        }
+    }
+    
+    /**
+    * Check if the given row and column is on the grid.
+    * @param row a potential row number
+    * @param col a potential col number
+    * @return {@code true} if the given row and column is on the grid. 
+    */
     public boolean isValid(int row, int col) {
         return row >= 0 && row < this.rows && col >= 0 && col < this.cols;
+    }
+    
+    /*
+    * Check if a potential grid square is actually on the grid with coordinates
+    * given as an array of length 2;
+    */
+    private boolean isValid(int[] loc) throws IllegalArgumentException {
+        validateLoc(loc);
+        return isValid(loc[0], loc[1]);
     }
     
     //Link a given grid square to adjacent stone (not lava) sites.
@@ -60,11 +86,46 @@ public class Labyrinth {
         }
     }
     
-    //Check if a given site is stone (not lava).
+    /**
+    * Checks if a given grid square is stone (or lava).
+    * @param row the row of the grid square to check.
+    * @param col the column of the grid square to check.
+    * @return {@code true} if the given square is stone, {@code false} if lava.
+    */
     public boolean isStone(int row, int col) {
         return grid[row][col];
     }
     
+    private boolean isStone(int[] loc) throws IllegalArgumentException {
+        validateLoc(loc);
+        return isStone(loc[0], loc[1]);
+    }
+    
+    /**
+    * Checks if a given set of instructions accurately solves the labyrinth.
+    * @param solution an array of integers representing the directions to move
+    * from one square to the next. With 0 = up, 1 = down, 2 = left, and 3 = right.
+    * @return {@code true if the given solution is correct}, otherwise {@code false}.
+    */
+    public boolean solves(int[] solution) {
+        int[] currentSquare = {0,0};
+        int[][] directions = {UP, DOWN, LEFT, RIGHT};
+        for (int i = 0; i < solution.length; i++) {
+            currentSquare = nextSquare(currentSquare, directions[solution[i]]);
+            if (isStone(currentSquare) && isValid(currentSquare)) {
+                return false;
+            }
+        }
+        return toAbs(currentSquare[0],currentSquare[1]) == destination;
+    }
+    
+    //Determine the next square from a given location and a direction to move.
+    private int[] nextSquare(int[] loc, int[] direction) throws IllegalArgumentException {
+        if (direction.length != 2) throw new IllegalArgumentException("direction and loc params must have exactly two elements.");
+        return new int[] {loc[0] + direction[0], loc[1] + direction[1]};
+    }
+    
+    //Print the grid.
     private void printGrid() {
         System.out.println();
         for (int i = 0; i < grid.length; i++) {
@@ -72,15 +133,24 @@ public class Labyrinth {
                 if (grid[i][j]) {
                     System.out.print(" S ");
                 } else {
-                    System.out.print(" _ ");
+                    System.out.print(" - ");
                 }
             }
             System.out.println();
         }
     }
     
+    //Some testing code.
     public static void main(String[] args) {
-        Labyrinth l = new Labyrinth(5,5);
+        if (args.length != 2) {
+            System.out.println("Usage is java Labyrinth [rows] [columns]");
+            return;
+        }
+        
+        int a = Integer.parseInt(args[0]);
+        int b = Integer.parseInt(args[1]);
+        
+        Labyrinth l = new Labyrinth(a,b);
         l.printGrid();
     }
     
