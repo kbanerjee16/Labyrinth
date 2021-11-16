@@ -37,7 +37,28 @@
 * A solution to the Labyrinth is a series of steps or "moves." These moves
 * begin from the start (top-left) square and each move can either be to the
 * square immediately above, below, to the left, or to the right of the current
-* square.
+* square. A solution is correct if the moves trace out a path along touching
+* squares from the start to the end squares.
+*
+* Moves can be indicated in two ways: <ol>
+* <li> As an {@code int[]} array </li>
+* <li> Using the class-defined constants </li>
+* </ol>
+* <br>
+* In the first case a solution is coded using the integers from 0 to 4 with:
+* <ul>
+* <li> "Up" = 0 </li>
+* <li> "Down" = 1 </li>
+* <li> "Left" = 2 </li>
+* <li> "Right" = 3 </li>
+* <ul>
+* <br>
+* <br>
+* In the second case, the solution is actually represented using an {@code int[][]}
+* array. The class has defined constants UP, DOWN, LEFT, and RIGHT which are
+* all {@code int[]} arrays with two elements representing a particular motion
+* through the grid. The numeric value of these constants, while <i> perhaps </i>
+* useful, is of no real importance outside the class.
 */
 public class Labyrinth {
     /**
@@ -169,7 +190,8 @@ public class Labyrinth {
     /**
     * Checks if a given set of instructions accurately solves the labyrinth.
     * @param solution an array of integers representing the directions to move
-    * from one square to the next. With 0 = up, 1 = down, 2 = left, and 3 = right.
+    * from the start square to the end square. With 0 = up, 1 = down, 2 = left, 
+    * and 3 = right.
     * @return {@code true if the given solution is correct}, otherwise {@code false}.
     */
     public boolean solves(int[] solution) {
@@ -177,11 +199,30 @@ public class Labyrinth {
         int[][] directions = {UP, DOWN, LEFT, RIGHT};
         for (int i = 0; i < solution.length; i++) {
             currentSquare = nextSquare(currentSquare, directions[solution[i]]);
-            if (isStone(currentSquare) && isValid(currentSquare)) {
+            if (!isStone(currentSquare) || !isValid(currentSquare)) {
                 return false;
             }
         }
-        return toAbs(currentSquare[0],currentSquare[1]) == destination;
+        return toAbs(currentSquare) == destination;
+    }
+    
+    /**
+    * Checks if a given set of instructions accurately solves the labyrinth.
+    * @param solution an {@code int[][]} array using the class-defined constants
+    * {@code UP}, {@code DOWN}, {@code LEFT}, and {@code RIGHT} detailing the
+    * steps to the final square from the start square.
+    * @return {@code true} if the given solution is correct, otherwise {@code false}.
+    */
+    public boolean solves(int[][] solution) {
+        int[] currentSquare = {0,0};
+        for (int i = 0; i < solution.length; i++) {
+            currentSquare = nextSquare(currentSquare, solution[i]);
+            if(!isStone(currentSquare) || !isValid(currentSquare)) {
+                return false;
+            }
+        }
+        
+        return toAbs(currentSquare) == destination;
     }
     
     //Determine the next square from a given location and a direction to move.
