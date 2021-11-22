@@ -1,79 +1,77 @@
+import java.util.ArrayList;
 public class LabyrinthSolver {
 	private Labyrinth maze;
 	private int rows;
 	private int cols;
-	private FINAL int up = row+1;
-	private FINAL int left = col-1;
-	private FINAL int right = col+1;
-	private FINAL int down = row-1;
+	private ArrayList<Integer> moves = new ArrayList<Integer>();
+	private int up = 0;
+	private int left = 3;
+	private int right = 2;
+	private int down = 1;
+	private int count = 0;
 	
 	public LabyrinthSolver(int r, int c) {
 		this.maze = new Labyrinth(r, c);
 		this.rows = r;
 		this.cols = c;
 	}
-	public void findSafeMove(int row, int col, Labyrinth l) {
-		if((row == rows-1) && (col == cols-1))
-			show solution
-			leave 
+	public void findSafeMove(int row, int col, Labyrinth maze) {
+		if((row == rows-1) && (col == cols-1)) {
+			return;
+			//show solution
+			//leave 
+		}
 		//loops through 4 times once for each direction
-		count = 0;
+		
 		while(count < 4){
-			if(count = 0){
+			if(count == 0){
 				row += 1;
 				if((maze.isValid(row, col)) && (maze.isStone(row, col))) {
-					//add solution to array
-					findSafeMove(row, col, l);
-					//go back
+					moves.add(up);
+					findSafeMove(row, col, maze);
+					goBack(row, col, up);
 				}
 			}
-			if(count = 1) {
+			if(count == 1) {
 				row -= 1;
 				if((maze.isValid(row, col)) && (maze.isStone(row, col))) {
-					//add solution to array
-					findSafeMove(row, col, l);
-					//go back
+					moves.add(down);
+					findSafeMove(row, col, maze);
+					goBack(row, col, down);
 				}
 			}
-			if(count = 2) {
+			if(count == 2) {
 				col += 1;
 				if((maze.isValid(row, col)) && (maze.isStone(row, col))) {
-					//add solution to array
-					findSafeMove(row, col, l);
-					//go back
+					moves.add(right);
+					findSafeMove(row, col, maze);
+					goBack(row, col, right);
 				}
 			}
-			if(count = 3) {
+			if(count == 3) {
 				col -= 1;
 				if((maze.isValid(row, col)) && (maze.isStone(row, col))) {
-					//add solution to array
-					findSafeMove(row, col, l);
-					//go back
+					moves.add(left);
+					findSafeMove(row, col, maze);
+					goBack(row, col, left);
 				}
 			}
 				
-			if((maze.isStone(row+check, col)) && maze.isValid(row+check, col))) {
-				//add to solution array
-				row = row+check;
-				col = col;
-				findSafeMove(row, col, l);
-				//go back
-			}
+			count++;
 		}
-		foreach (x:{up, down, left, right})
-			if(x is a valid move)
-				make move x
-				findSafeMove(newrow, newcol, l)
 	}
 	
-	public int determineDirection(int row, int col, int direction) {
-		if(direction == up)
-			return row+1;
-		if(direction == down)
-			return row-1;
-		if(direction == right)
-			return col+1;
-		if(direction == left)
-			return col-1;
+	public void goBack(int row, int col, int direction) {
+		moves.remove(direction);
 	}
+	
+	public void solve() {
+		findSafeMove(0, 0, maze);
+	}
+	
+	public static void main(String[] args) {
+		LabyrinthSolver test = new LabyrinthSolver(5, 5);
+		test.solve();
+	}
+	
 }
