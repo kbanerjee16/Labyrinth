@@ -16,26 +16,34 @@ public class LabyrinthSolver {
 		this.rows = r;
 		this.cols = c;
 		moveTracker = new boolean [r][c];
+		moves.add(0);
 	}
 	public boolean findSafeMove(int row, int col, Labyrinth maze) {
 		if((row == rows-1) && (col == cols-1)) {
-			printSolution();
+			System.out.println(moves.size());
 			return true;
 		}
-		//loops through 4 times once for each direction
-		//have you been there before
-		//method encapsulation for the if statements
-		//if next one is a solution return true
-		//remove froms olution array and clear array that keeps track of whre you have been (already been here)
-		
+		count = 0;
 		while(count < 4){
 			if(count == 0){
-				row += 1;
-				recursiveCall(row, col, up);
+				row -= 1;
+				if(isSafe(row, col, up) {
+					if(findSafeMove(row, col, maze)) {
+						moves.add(up);
+						moveTracker[row][col] = true;
+						return true;
+					}
+				}
+				goBack(row, col, direction);
 			}
 			if(count == 1) {
-				row -= 1;
-				recursiveCall(row, col, down);
+				row += 1;
+				if(isSafe(row, col, down)) {
+					if(findSafeMove(row, col, maze)) {
+						moves.add(down);
+						moveTracker[row][col] = true;
+					}
+				}
 			}
 			if(count == 2) {
 				col += 1;
@@ -51,17 +59,16 @@ public class LabyrinthSolver {
 		return false;
 	}
 	
-	public void recursiveCall(int row, int col, int direction) {
+	public void isSafe(int row, int col, int direction) {
 		if((maze.isValid(row, col)) && (maze.isStone(row, col)) && (!alrBeenHere(row, col))) {
-			moves.add(direction);
-			findSafeMove(row, col, maze);
 			moveTracker[row][col] = true;
+			findSafeMove(row, col, maze);
 			goBack(row, col, direction);
 		}
 	}
 	
 	public void goBack(int row, int col, int direction) {
-		moves.remove(direction);
+		moves.remove(moves.size-1);
 		moveTracker[row][col] = false;
 	}
 	
@@ -75,6 +82,10 @@ public class LabyrinthSolver {
 		}
 	}
 	
+	public void printMaze() {
+		maze.printGrid();
+	}
+	
 	public boolean alrBeenHere(int row, int col) {
 		if(moveTracker[row][col])
 			return true;
@@ -83,6 +94,7 @@ public class LabyrinthSolver {
 	
 	public static void main(String[] args) {
 		LabyrinthSolver test = new LabyrinthSolver(5, 5);
+		test.printMaze();
 		test.solve();
 	}
 	
