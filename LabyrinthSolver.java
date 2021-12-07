@@ -16,42 +16,48 @@ public class LabyrinthSolver {
 		this.rows = r;
 		this.cols = c;
 		moveTracker = new boolean [r][c];
-		moves.add(0);
+		moveTracker[0][0] = true;
 	}
 	public boolean findSafeMove(int row, int col, Labyrinth maze) {
 		if((row == rows-1) && (col == cols-1)) {
-			System.out.println(moves.size());
+			printSolution();
 			return true;
 		}
 		count = 0;
+		//int newRow = 0;
+		//int newCol = 0;
 		while(count < 4){
 			if(count == 0){
-				row -= 1;
-				if(isSafe(row, col, up) {
-					if(findSafeMove(row, col, maze)) {
-						moves.add(up);
-						moveTracker[row][col] = true;
+				if(isSafe(row-1, col)) {
+					makeMove(row-1, col, up);
+					if(findSafeMove(row-1, col, maze))
 						return true;
-					}
+					goBack(row-1, col, up);
 				}
-				goBack(row, col, direction);
 			}
 			if(count == 1) {
-				row += 1;
-				if(isSafe(row, col, down)) {
-					if(findSafeMove(row, col, maze)) {
-						moves.add(down);
-						moveTracker[row][col] = true;
-					}
+				if(isSafe(row+1, col)) {
+					makeMove(row+1, col, down);
+					if(findSafeMove(row+1, col, maze))
+						return true;
+					goBack(row+1, col, down);
 				}
 			}
 			if(count == 2) {
-				col += 1;
-				recursiveCall(row, col, right);
+				if(isSafe(row, col+1)) {
+					makeMove(row, col+1, right);
+					if(findSafeMove(row, col+1, maze))
+						return true;
+					goBack(row, col+1, right);
+				}
 			}
 			if(count == 3) {
-				col -= 1;
-				recursiveCall(row, col, left);
+				if(isSafe(row, col-1)) {
+					makeMove(row, col-1, left);
+					if(findSafeMove(row, col-1, maze))
+						return true;
+					goBack(row, col-1, left);
+				}
 			}
 				
 			count++;
@@ -59,17 +65,21 @@ public class LabyrinthSolver {
 		return false;
 	}
 	
-	public void isSafe(int row, int col, int direction) {
-		if((maze.isValid(row, col)) && (maze.isStone(row, col)) && (!alrBeenHere(row, col))) {
-			moveTracker[row][col] = true;
-			findSafeMove(row, col, maze);
-			goBack(row, col, direction);
-		}
+	public boolean isSafe(int row, int col) {
+		if((maze.isValid(row, col)) && (maze.isStone(row, col)) && (!alrBeenHere(row, col)))
+			return true;
+		return false;
+	}
+	
+	public void makeMove(int row, int col, int direction) {
+		moves.add(direction);
+		moveTracker[row][col] = true;
 	}
 	
 	public void goBack(int row, int col, int direction) {
-		moves.remove(moves.size-1);
 		moveTracker[row][col] = false;
+		if(moves.size() > 1)
+			moves.remove(moves.size()-1);
 	}
 	
 	public void solve() {
@@ -78,7 +88,14 @@ public class LabyrinthSolver {
 	
 	public void printSolution() {
 		for(int i = 0; i < moves.size(); i++) {
-			System.out.println(moves.get(i));
+			if(moves.get(i) == 0)
+				System.out.println("up");
+			if(moves.get(i) == 1)
+				System.out.println("down");
+			if(moves.get(i) == 2)
+				System.out.println("right");
+			if(moves.get(i) == 3)
+				System.out.println("left");
 		}
 	}
 	
@@ -93,7 +110,7 @@ public class LabyrinthSolver {
 	}
 	
 	public static void main(String[] args) {
-		LabyrinthSolver test = new LabyrinthSolver(5, 5);
+		LabyrinthSolver test = new LabyrinthSolver(7, 7);
 		test.printMaze();
 		test.solve();
 	}
