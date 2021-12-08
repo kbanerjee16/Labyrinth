@@ -73,6 +73,7 @@ public class LabyrinthSolver {
 	}
 	
 	public void goBack(int row, int col, int direction) {
+		moveTracker[row][col] = false;
 		if(moves.size() > 1)
 			moves.remove(moves.size()-1);
 	}
