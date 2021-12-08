@@ -12,14 +12,14 @@ public class LabyrinthSolver {
 	private boolean [][] moveTracker;
 	
 	public LabyrinthSolver(int r, int c) {
-		this.maze = new Labyrinth(r, c);
-		this.rows = r;
-		this.cols = c;
+		//this.maze = new Labyrinth(r, c);
+		//this.rows = r;
+		//this.cols = c;
 		moveTracker = new boolean [r][c];
 		moveTracker[0][0] = true;
 	}
 	public boolean findSafeMove(int row, int col, Labyrinth maze) {
-		if((row == rows-1) && (col == cols-1)) {
+		if((row == maze.rows-1) && (col == maze.cols-1)) {
 			printSolution();
 			return true;
 		}
@@ -30,7 +30,7 @@ public class LabyrinthSolver {
 					makeMove(row-1, col, up);
 					if(findSafeMove(row-1, col, maze))
 						return true;
-					goBack(row-1, col, up);
+					goBack(row-1, col);
 				}
 			}
 			if(count == 1) {
@@ -38,7 +38,7 @@ public class LabyrinthSolver {
 					makeMove(row+1, col, down);
 					if(findSafeMove(row+1, col, maze))
 						return true;
-					goBack(row+1, col, down);
+					goBack(row+1, col);
 				}
 			}
 			if(count == 2) {
@@ -46,7 +46,7 @@ public class LabyrinthSolver {
 					makeMove(row, col+1, right);
 					if(findSafeMove(row, col+1, maze))
 						return true;
-					goBack(row, col+1, right);
+					goBack(row, col+1);
 				}
 			}
 			if(count == 3) {
@@ -54,7 +54,7 @@ public class LabyrinthSolver {
 					makeMove(row, col-1, left);
 					if(findSafeMove(row, col-1, maze))
 						return true;
-					goBack(row, col-1, left);
+					goBack(row, col-1);
 				}
 			}
 				
@@ -72,14 +72,13 @@ public class LabyrinthSolver {
 		moveTracker[row][col] = true;
 	}
 	
-	public void goBack(int row, int col, int direction) {
+	public void goBack(int row, int col) {
 		moveTracker[row][col] = false;
-		if(moves.size() > 1)
-			moves.remove(moves.size()-1);
+		moves.remove(moves.size()-1);
 	}
 	
-	public void solve() {
-		findSafeMove(0, 0, maze);
+	public void solve(Labyrinth l) {
+		findSafeMove(0, 0, l);
 		//return moves() don't print it
 	}
 	
@@ -111,5 +110,5 @@ public class LabyrinthSolver {
 	}
 	
 }
-//make class static
+//make class static no constructor
 //return solution don't print it
