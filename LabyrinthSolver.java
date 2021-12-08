@@ -24,8 +24,6 @@ public class LabyrinthSolver {
 			return true;
 		}
 		count = 0;
-		//int newRow = 0;
-		//int newCol = 0;
 		while(count < 4){
 			if(count == 0){
 				if(isSafe(row-1, col)) {
@@ -66,9 +64,7 @@ public class LabyrinthSolver {
 	}
 	
 	public boolean isSafe(int row, int col) {
-		if((maze.isValid(row, col)) && (maze.isStone(row, col)) && (!alrBeenHere(row, col)))
-			return true;
-		return false;
+		return (maze.isValid(row, col)) && (maze.isStone(row, col)) && (!alrBeenHere(row, col));
 	}
 	
 	public void makeMove(int row, int col, int direction) {
@@ -77,13 +73,13 @@ public class LabyrinthSolver {
 	}
 	
 	public void goBack(int row, int col, int direction) {
-		moveTracker[row][col] = false;
 		if(moves.size() > 1)
 			moves.remove(moves.size()-1);
 	}
 	
 	public void solve() {
 		findSafeMove(0, 0, maze);
+		//return moves() don't print it
 	}
 	
 	public void printSolution() {
@@ -104,9 +100,7 @@ public class LabyrinthSolver {
 	}
 	
 	public boolean alrBeenHere(int row, int col) {
-		if(moveTracker[row][col])
-			return true;
-		return false;
+		return moveTracker[row][col];
 	}
 	
 	public static void main(String[] args) {
@@ -116,3 +110,5 @@ public class LabyrinthSolver {
 	}
 	
 }
+//make class static
+//return solution don't print it
